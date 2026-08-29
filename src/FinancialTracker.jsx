@@ -23,10 +23,9 @@ const expenses = transactions
 const balance = income - expenses;
 
   
-  const radius = 70;
-  const budget = 1000;
+const radius = 70;
+const budget = 1000;
   const totalSpent = transactions
-
   .filter((t) => t.amount < 0)
   .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
