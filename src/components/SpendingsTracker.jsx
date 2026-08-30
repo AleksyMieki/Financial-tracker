@@ -16,13 +16,21 @@ export default function SpendingsTracker({ transactions, setTransactions }) {
   {
     setIsEdit(true);
     setEditIndex(i);
+    if(isIncome)
+    {
     setHideCategory(false);
+    }
+    else
+    {
+    setHideCategory(true);
+    }
+    
   }
 
   function incomeCategory(val)
   {
     setIsIncome(val)
-    setHideCategory(!hideCategory);
+    setHideCategory(false);
     setDraftCategory("income")
   }
 
@@ -60,7 +68,7 @@ export default function SpendingsTracker({ transactions, setTransactions }) {
     setEditIndex(null);
     setIsEdit(false);
     setDraftCategory(CATEGORIES[0]);
-    setHideCategory(false);
+  
   }
 
   return (
@@ -91,7 +99,17 @@ export default function SpendingsTracker({ transactions, setTransactions }) {
             <input
               type="checkbox"
               checked={isIncome}
-              onChange={(e) => incomeCategory(e.target.checked)}
+              onChange={(e) => {
+                if(e.target.checked)
+                {
+                incomeCategory(e.target.checked)
+                }
+                else
+                {
+                setIsIncome(false);
+                setHideCategory(true);
+                }
+              }}
             />
             {hideCategory && (
               <select value={draftCategory} onChange={(e) => setDraftCategory(e.target.value)}>

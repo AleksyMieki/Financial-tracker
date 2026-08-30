@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import BalanceCard from "./components/BalanceCard";
 import SpendRing from "./components/SpendRing";
 import SpendingsTracker from "./components/SpendingsTracker";
+import Sidebar from "./components/Sidebar";
 import "./index.css";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -11,6 +12,7 @@ import { useEffect } from "react";
 export default function FinancialTracker() {
   
 const [transactions, setTransactions] = useState([]);
+const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
 const income = transactions
   .filter((t) => t.amount > 0)
@@ -34,7 +36,7 @@ const pct = Math.min(totalSpent / budget, 1);
   return (
     <div>
       {/* Nav */}
-      <Navbar/>
+      <Navbar onHomeClick={() => setIsSideBarOpen(true)} />
 
       {/* Title */}
       <Hero/>
@@ -43,7 +45,15 @@ const pct = Math.min(totalSpent / budget, 1);
         {/* Balance card */}
       <BalanceCard balance={balance} income={income} expenses={expenses} />
 
-        {/* Spend ring card */}
+      {/* Spend ring card */}
+      <Sidebar
+      isOpen={isSideBarOpen}
+      onClose={() => {
+        console.log("closing!")
+        setIsSideBarOpen(false)}
+      }
+      transactions={transactions}
+      />
 
       <SpendRing expenses={expenses}/>
 
